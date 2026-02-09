@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@import "@fontsource/urbanist/400.css";
+@import "@fontsource/urbanist/500.css";
+@import "@fontsource/urbanist/600.css";
+@import "@fontsource/urbanist/700.css";
+@import "@fontsource/urbanist/800.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Life After UI Color Palette */
+  --color-nueve-black: #0C0C0C;
+  --color-nueve-white: #FFFFFF;
+  --color-surface-grey: #b8b8b8;
+  --color-text-grey: #4D4D4D;
+  --color-card-dark: #2f2f33;
+  --color-card-border: #252528;
+  --color-platform-bar: #999999;
+
+  /* Brand Primary */
+  --color-brand-orange: #F8810D;
+  --color-brand-orange-light: #FFB347;
+
+  /* UI Accents */
+  --color-electric-blue: #30A2FF;
+  --color-mint-cyan: #47FFD1;
+  --color-vibrant-yellow: #FAD02C;
+
+  /* Typography */
+  --font-sans: "Urbanist", system-ui, sans-serif;
+
+  /* Tracking */
+  --letter-spacing-tighter: -0.03em;
+
+  /* Border Radius */
+  --radius-pill: 500px;
+  --radius-card: 30px;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #b8b8b8;
+  --foreground: #2e2e2e;
+  --card: #2f2f33;
+  --card-foreground: #FFFFFF;
+  --popover: #2f2f33;
+  --popover-foreground: #FFFFFF;
+  --primary: #2e2e2e;
+  --primary-foreground: #FFFFFF;
+  --secondary: #999999;
+  --secondary-foreground: #2e2e2e;
+  --muted: #d2d2d2;
+  --muted-foreground: #87878c;
+  --accent: #cdcdcd;
+  --accent-foreground: #2e2e2e;
+  --destructive: #DC2626;
+  --border: rgba(37, 37, 40, 0.3);
+  --input: rgba(205, 205, 205, 0.3);
+  --ring: #2e2e2e;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
