@@ -97,9 +97,35 @@ function ScrollChevron() {
    ────────────────────────────────────── */
 export function LifeAfterUI() {
   const [email, setEmail] = useState("")
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
+  const [errorMsg, setErrorMsg] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setErrorMsg("")
+
+    const trimmed = email.trim()
+    if (!trimmed) {
+      setErrorMsg("Please enter your email.")
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setErrorMsg("Please enter a valid email address.")
+      return
+    }
+
+    setStatus("sending")
+    try {
+      await fetch("https://hooks.zapier.com/hooks/catch/15087615/ue5c22t/", {
+        method: "POST",
+        body: JSON.stringify({ email: trimmed }),
+      })
+      setStatus("sent")
+      setEmail("")
+    } catch {
+      setStatus("error")
+      setErrorMsg("Something went wrong. Please try again.")
+    }
   }
 
   return (
@@ -199,14 +225,27 @@ export function LifeAfterUI() {
                 />
                 <motion.button
                   type="submit"
-                  className="mr-[4px] h-[calc(100%-8px)] shrink-0 rounded-[70px] bg-white px-5 text-[14px] font-bold text-[#2e2e2e] sm:px-7 sm:text-[16px] md:text-[17px]"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  disabled={status === "sending" || status === "sent"}
+                  className="mr-[4px] h-[calc(100%-8px)] shrink-0 rounded-[70px] bg-white px-5 text-[14px] font-bold text-[#2e2e2e] disabled:opacity-60 sm:px-7 sm:text-[16px] md:text-[17px]"
+                  whileHover={status === "idle" || status === "error" ? { scale: 1.05 } : {}}
+                  whileTap={status === "idle" || status === "error" ? { scale: 0.95 } : {}}
                   transition={{ duration: 0.15 }}
                 >
-                  Join
+                  {status === "sending" ? "..." : status === "sent" ? "Done!" : "Join"}
                 </motion.button>
               </div>
+
+              {/* Validation / status message */}
+              {errorMsg && (
+                <p className="mt-3 text-center text-[13px] font-semibold text-red-400">
+                  {errorMsg}
+                </p>
+              )}
+              {status === "sent" && (
+                <p className="mt-3 text-center text-[13px] font-semibold text-green-400">
+                  You're on the list!
+                </p>
+              )}
             </form>
 
             {/* Disclaimer */}
