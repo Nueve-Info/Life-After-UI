@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import stanImg from "@/assets/stan.png"
 import bgImg from "@/assets/bg.png"
+import { Instagram, Globe } from "lucide-react"
 import { PodcastFooter } from "./podcast-footer"
 
 /* ──────────────────────────────────────
@@ -144,20 +145,20 @@ export function LifeAfterUI() {
 
       {/* ── Content container ── */}
       <div className="relative z-10 flex min-h-screen flex-col items-center px-4">
-        {/* ── PODCAST label ── */}
+        {/* ── Host label ── */}
         <motion.p
-          className="mt-28 text-[14px] font-bold tracking-[0.48px] text-[#fcfcfc] sm:mt-12 sm:text-[18px] md:mt-14 md:text-[24px]"
+          className="mt-28 text-[12px] font-semibold tracking-[0.3px] text-[#fcfcfc]/60 sm:mt-12 sm:text-[14px] md:mt-14 md:text-[16px]"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0}
         >
-          PODCAST
+          Powered by NueveFolio
         </motion.p>
 
         {/* ── Main title ── */}
         <motion.h1
-          className="mt-4 text-center text-[42px] font-bold leading-none text-[#2e2e2e] sm:text-[56px] md:text-[72px] lg:text-[80px]"
+          className="mt-3 text-center text-[42px] font-bold leading-none text-[#2e2e2e] sm:text-[56px] md:text-[72px] lg:text-[80px]"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
@@ -180,7 +181,7 @@ export function LifeAfterUI() {
         {/* ── Scroll chevron ── */}
         <ScrollChevron />
 
-        {/* ── Person photo placeholder ── */}
+        {/* ── Person photo + hosted by overlay ── */}
         <motion.div
           className="relative z-20 -mt-5 h-[280px] w-[340px] sm:-mt-6 sm:h-[340px] sm:w-[420px] md:h-[382px] md:w-[473px]"
           variants={scaleIn}
@@ -188,6 +189,16 @@ export function LifeAfterUI() {
           animate="visible"
           custom={0.4}
         >
+          {/* Hosted by — overlaid at 50% height, left-aligned */}
+          <motion.p
+            className="absolute left-0 top-2/3 -translate-y-1/2 text-[11px] font-semibold tracking-[0.3px] text-[#fcfcfc]/60 sm:text-[13px] md:text-[15px]"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.5}
+          >
+            Hosted by<br />Stan Swiatkiewicz
+          </motion.p>
           <img
             src={stanImg}
             alt="Host portrait"
@@ -256,11 +267,70 @@ export function LifeAfterUI() {
 
           {/* Platform logos bar */}
           <div className="grid grid-cols-2 place-items-center gap-y-3 bg-platform-bar px-6 py-4 text-[clamp(17px,2.5vw,18px)] sm:grid-cols-4 sm:py-5">
-            <YouTubeLogo />
-            <SpotifyLogo />
-            <ApplePodcastsLogo />
-            <SoundCloudLogo />
+            <a href="https://www.youtube.com/@LifeAfterUI" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <YouTubeLogo />
+            </a>
+            <a href="https://open.spotify.com/show/7axNIkwD8AYViDUoPqqDgg?si=28668edb95e34506" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <SpotifyLogo />
+            </a>
+            <a href="https://podcasts.apple.com/pl/podcast/life-after-ui/id188822320" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <ApplePodcastsLogo />
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
+              <SoundCloudLogo />
+            </a>
           </div>
+        </motion.div>
+
+        {/* ── Nueve Folio section ── */}
+        <motion.div
+          className="mt-10 w-full max-w-[646px] px-2 sm:px-0"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+        >
+          <motion.div
+            className="flex items-center justify-between overflow-hidden rounded-[16px] border border-[#4d4d4d]/20 bg-transparent px-5 py-4 min-[480px]:rounded-[20px] min-[480px]:px-8 min-[480px]:py-5"
+            variants={scaleIn}
+            custom={0}
+          >
+            {/* Left: branding */}
+            <div className="text-left">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#4d4d4d]">
+                A show by
+              </p>
+              <h3 className="mt-0.5 text-[18px] font-bold text-[#4d4d4d] min-[480px]:text-[22px]">
+                NueveFolio
+              </h3>
+              <p className="max-w-[160px] text-[11px] font-semibold leading-snug text-[#4d4d4d] min-[480px]:max-w-none min-[480px]:text-[13px]">
+                Product Design Education &amp; Community
+              </p>
+            </div>
+
+            {/* Right: links */}
+            <div className="flex items-center gap-2">
+              <a
+                href="https://www.nueve.design/sub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#4d4d4d]/30 text-[#4d4d4d] transition-colors duration-200 hover:border-[#4d4d4d]/60 hover:text-[#2e2e2e] min-[480px]:h-auto min-[480px]:w-auto min-[480px]:gap-1.5 min-[480px]:px-4 min-[480px]:py-2"
+                aria-label="Website"
+              >
+                <Globe className="h-3.5 w-3.5" />
+                <span className="hidden text-[13px] font-bold min-[480px]:inline">Website</span>
+              </a>
+              <a
+                href="https://instagram.com/nueve.folio"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#4d4d4d]/30 text-[#4d4d4d] transition-colors duration-200 hover:border-[#4d4d4d]/60 hover:text-[#2e2e2e] min-[480px]:h-auto min-[480px]:w-auto min-[480px]:gap-1.5 min-[480px]:px-4 min-[480px]:py-2"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-3.5 w-3.5" />
+                <span className="hidden text-[13px] font-bold min-[480px]:inline">Instagram</span>
+              </a>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Footer */}

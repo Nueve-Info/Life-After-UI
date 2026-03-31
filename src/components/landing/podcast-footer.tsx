@@ -51,7 +51,7 @@ export function PodcastFooter() {
             custom={0.1}
           >
             <h3 className="text-[14px] font-bold text-[#4d4d4d] sm:text-[15px]">
-              Life after UI - Podcast
+              Life After UI by NueveFolio
             </h3>
             <p className="max-w-[340px] text-[13px] font-semibold leading-relaxed text-[#4d4d4d] sm:text-[14px]">
               We host a podcast where leading product designers share how they
