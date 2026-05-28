@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { motion } from "framer-motion"
 import stanImg from "@/assets/stan.png"
 import bgImg from "@/assets/bg.png"
@@ -64,16 +63,6 @@ function ApplePodcastsLogo() {
   )
 }
 
-function SoundCloudLogo() {
-  return (
-    <div className="flex items-center gap-[0.4em]">
-      <svg viewBox="0 0 24 24" className="h-[1em] w-[1em]" fill="white">
-        <path d="M23.999 14.165c-.052 1.796-1.612 3.169-3.4 3.169h-8.18a.68.68 0 0 1-.675-.683V7.862a.747.747 0 0 1 .452-.724s.75-.513 2.333-.513a5.364 5.364 0 0 1 2.763.755 5.433 5.433 0 0 1 2.57 3.54c.282-.08.574-.121.868-.12.884 0 1.73.358 2.347.992s.948 1.49.922 2.373ZM10.721 8.421c.247 2.98.427 5.697 0 8.672a.264.264 0 0 1-.53 0c-.395-2.946-.22-5.718 0-8.672a.264.264 0 0 1 .53 0ZM9.072 9.448c.285 2.659.37 4.986-.006 7.655a.277.277 0 0 1-.55 0c-.331-2.63-.256-5.02 0-7.655a.277.277 0 0 1 .556 0Zm-1.663-.257c.27 2.726.39 5.171 0 7.904a.266.266 0 0 1-.532 0c-.38-2.69-.257-5.21 0-7.904a.266.266 0 0 1 .532 0Zm-1.647.77a26.108 26.108 0 0 1-.008 7.147.272.272 0 0 1-.542 0 27.955 27.955 0 0 1 0-7.147.275.275 0 0 1 .55 0Zm-1.67 1.769c.421 1.865.228 3.5-.029 5.388a.257.257 0 0 1-.514 0c-.21-1.858-.398-3.549 0-5.389a.272.272 0 0 1 .543 0Zm-1.655-.273c.388 1.897.26 3.508-.01 5.412-.026.28-.514.283-.54 0-.244-1.878-.347-3.54-.01-5.412a.283.283 0 0 1 .56 0Zm-1.668.911c.4 1.268.257 2.292-.026 3.572a.257.257 0 0 1-.514 0c-.241-1.262-.354-2.312-.023-3.572a.283.283 0 0 1 .563 0Z" />
-      </svg>
-      <span className="text-[0.85em] font-bold tracking-wider uppercase text-white">SoundCloud</span>
-    </div>
-  )
-}
 
 /* ──────────────────────────────────────
    Scroll-down chevron
@@ -97,38 +86,6 @@ function ScrollChevron() {
    Main Landing Component
    ────────────────────────────────────── */
 export function LifeAfterUI() {
-  const [email, setEmail] = useState("")
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
-  const [errorMsg, setErrorMsg] = useState("")
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setErrorMsg("")
-
-    const trimmed = email.trim()
-    if (!trimmed) {
-      setErrorMsg("Please enter your email.")
-      return
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      setErrorMsg("Please enter a valid email address.")
-      return
-    }
-
-    setStatus("sending")
-    try {
-      await fetch("https://hooks.zapier.com/hooks/catch/15087615/ue5c22t/", {
-        method: "POST",
-        body: JSON.stringify({ email: trimmed }),
-      })
-      setStatus("sent")
-      setEmail("")
-    } catch {
-      setStatus("error")
-      setErrorMsg("Something went wrong. Please try again.")
-    }
-  }
-
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#B8B8B8]">
       {/* ── Grain texture overlay ── */}
@@ -221,52 +178,17 @@ export function LifeAfterUI() {
           {/* Dark area */}
           <div className="bg-card-dark px-6 pb-6 pt-8 sm:px-10 sm:pt-10">
             <h2 className="text-center text-[22px] font-bold leading-[1.3] text-white sm:text-[28px] md:text-[34px]">
-              Join the waitlist
+              Listen now
             </h2>
 
-            {/* Email input */}
-            <form onSubmit={handleSubmit} className="mt-6">
-              <div className="flex h-[48px] items-center rounded-[70px] border-2 border-[#cdcdcd]/30 transition-colors duration-300 focus-within:border-[#cdcdcd]/60 sm:h-[54px] md:h-[58px]">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="h-full min-w-0 flex-1 rounded-l-[70px] bg-transparent pl-5 pr-2 text-center text-[16px] font-bold text-[#d2d2d2] placeholder-[#d2d2d2] outline-none sm:pl-6 sm:text-[18px] md:text-[20px]"
-                />
-                <motion.button
-                  type="submit"
-                  disabled={status === "sending" || status === "sent"}
-                  className="mr-[4px] h-[calc(100%-8px)] shrink-0 rounded-[70px] bg-white px-5 text-[14px] font-bold text-[#2e2e2e] disabled:opacity-60 sm:px-7 sm:text-[16px] md:text-[17px]"
-                  whileHover={status === "idle" || status === "error" ? { scale: 1.05 } : {}}
-                  whileTap={status === "idle" || status === "error" ? { scale: 0.95 } : {}}
-                  transition={{ duration: 0.15 }}
-                >
-                  {status === "sending" ? "..." : status === "sent" ? "Done!" : "Join"}
-                </motion.button>
-              </div>
-
-              {/* Validation / status message */}
-              {errorMsg && (
-                <p className="mt-3 text-center text-[13px] font-semibold text-red-400">
-                  {errorMsg}
-                </p>
-              )}
-              {status === "sent" && (
-                <p className="mt-3 text-center text-[13px] font-semibold text-green-400">
-                  You're on the list!
-                </p>
-              )}
-            </form>
-
-            {/* Disclaimer */}
+            {/* Subtitle */}
             <p className="mt-4 text-center text-[13px] font-semibold text-[#87878c] sm:text-[15px]">
-              No spam. No newsletter. Just new episode info.
+              New episodes on your favorite platform.
             </p>
           </div>
 
           {/* Platform logos bar */}
-          <div className="grid grid-cols-2 place-items-center gap-y-3 bg-platform-bar px-6 py-4 text-[clamp(17px,2.5vw,18px)] sm:grid-cols-4 sm:py-5">
+          <div className="grid grid-cols-3 place-items-center gap-y-3 bg-platform-bar px-6 py-4 text-[clamp(17px,2.5vw,18px)] sm:py-5">
             <a href="https://www.youtube.com/@LifeAfterUI" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
               <YouTubeLogo />
             </a>
@@ -275,9 +197,6 @@ export function LifeAfterUI() {
             </a>
             <a href="https://podcasts.apple.com/pl/podcast/life-after-ui/id188822320" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
               <ApplePodcastsLogo />
-            </a>
-            <a href="#" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70">
-              <SoundCloudLogo />
             </a>
           </div>
         </motion.div>
